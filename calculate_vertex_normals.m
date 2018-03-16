@@ -1,5 +1,4 @@
 function [VN] = calculate_vertex_normals(V, F, N)
-    % This is a really naive approach.
     Vs = size(V);
     VN = [];
     % Calculate normal for each vertex
@@ -12,6 +11,7 @@ function [VN] = calculate_vertex_normals(V, F, N)
             Nc = Nc + N(a(face), :);
         end
         
+        Nc = Nc / norm(Nc);
         VN = [VN; Nc];
     end
 end

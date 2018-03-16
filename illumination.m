@@ -1,3 +1,4 @@
+% This function is for per vertex lighting.
 function [I] = illumination(V, F, VN)
     I = [];
 
@@ -5,17 +6,17 @@ function [I] = illumination(V, F, VN)
     Ia = 0.7;
     Ii = 0.5;
     % Reflection coefficients
-    Ka = [0.5, 0.2, 0.3];
-    Kd = [0.2, 0.3, 0.7];
-    Ks = [0.1, 0.1, 0.1];
+    Ka = [0.5, 0.1, 0.1];
+    Kd = [0.1, 0.5, 0.1];
+    Ks = [0.1, 0.1, 0.5];
 
     % Light position
-    L = [10, 10, 10];
+    L = [0, -1, 0];
     L = L / norm(L);
     
     % View position
-    cam = [3, 3, 3];
-    cam = cam / norm(L);
+    cam = [0, -1, 0];
+    cam = cam / norm(cam);
     
     % Specular distribution
     sd = 20;
@@ -31,15 +32,13 @@ function [I] = illumination(V, F, VN)
         ambient = Ia * Ka;
         
         % Diffuse Term
-        dots = dot(Nc, L);
         diffuse = Ii * Kd * dot(Nc, L);
         
         % Specular Term
-        R = L - 2.0 * dot(L, Nc) * Nc;
+        R = L - (2.0 * dot(Nc, L) * Nc);
         R = R / norm(R);
         specular = Ii * Ks * (dot(R, cam))^sd;
-        specular = 0;
-      
+        
         Ic = ambient + diffuse + specular;
         I = [I; Ic];
     end

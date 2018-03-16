@@ -12,6 +12,7 @@ function [N] = calculate_normals(V, F)
         Y = P3 - P1;
        
         Nc = cross(X, Y);
+        Nc = Nc / norm(Nc);
         N = [N; Nc];
     end
 end
